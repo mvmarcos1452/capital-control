@@ -9,6 +9,9 @@ WORKDIR /app
 COPY package.json bun.lock* ./
 RUN bun install --frozen-lockfile
 
+# No estágio de builder (antes de rodar o build):
+RUN mkdir -p /app/public
+
 # 2. Builder
 FROM oven/bun:1-alpine AS builder
 WORKDIR /app
