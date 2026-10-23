@@ -1,0 +1,8 @@
+node_modules/
+.next/
+out/
+build/
+auth_info_baileys/
+.env*.local
+.DS_Store
+*.log

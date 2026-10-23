@@ -1,0 +1,25 @@
+# ==============================================================================
+# DOCKERFILE: CAPITAL CONTROL - SERVIÇO BOT WHATSAPP (BAILEYS WEBSOCKET)
+# ==============================================================================
+
+FROM oven/bun:1-alpine AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+# Instalação de dependências de produção
+COPY package.json bun.lock* ./
+RUN bun install --production --frozen-lockfile
+
+# Cópia do código fonte do bot e regras de negócio
+COPY tsconfig.json ./
+COPY bot ./bot
+COPY lib ./lib
+COPY types ./types
+
+# Criação da pasta de autenticação com permissões adequadas
+RUN mkdir -p /app/auth_info_baileys
+
+VOLUME ["/app/auth_info_baileys"]
+
+CMD ["bun", "run", "bot/index.ts"]
